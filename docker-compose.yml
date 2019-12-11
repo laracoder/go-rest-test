@@ -1,0 +1,10 @@
+version: "3.7"
+services:
+  app:
+    container_name: go-rest-api
+    image: go-rest-api-events
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8080:8080"
