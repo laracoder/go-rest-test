@@ -6,19 +6,22 @@ import (
 	"github.com/laracoder/go-rest-api/event"
 	"log"
 	"net/http"
+	"os"
 )
 
-const serverPort = "8080"
+var (
+	serverPort = os.Getenv("PORT")
+)
 
 func main() {
 	log.Println("Application server started at port " + serverPort)
 	router := mux.NewRouter().StrictSlash(true)
 	registerApiRoutes(router)
-	log.Fatal(http.ListenAndServe(":" + serverPort, router))
+	log.Fatal(http.ListenAndServe(":"+serverPort, router))
 }
 
 func homeLink(w http.ResponseWriter, r *http.Request) {
-	fmt.Fprintf(w, "Welcome home!")
+	fmt.Fprintf(w, "event-rest-service")
 }
 
 func registerApiRoutes(r *mux.Router) {
@@ -27,4 +30,3 @@ func registerApiRoutes(r *mux.Router) {
 	api.HandleFunc("/events", event.GetAllEvents)
 	api.HandleFunc("/events/{id}", event.GetEvent)
 }
-
